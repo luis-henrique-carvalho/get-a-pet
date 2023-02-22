@@ -48,7 +48,6 @@ module.exports = class UserController {
 		const passwordHast = await bcrypt.hash(password, salt);
 
 		// create a user
-
 		const user = new User({
 			name,
 			email,
@@ -63,5 +62,44 @@ module.exports = class UserController {
 		} catch (error) {
 			res.status(500).json({ message: error });
 		}
+	}
+
+	static async login(req, res) {
+		const { email, password } = req.body;
+
+		// validations
+		if (!email) {
+			res.status(422).json({ message: "O email é obrigatório" });
+			return;
+		}
+
+		if (!password) {
+			res.status(422).json({ message: "O nome é obrigatório" });
+			return;
+		}
+
+		// check if user exists
+		const user = await User.findOne({ email: email });
+
+		console.log(user)
+
+		if (!user) {
+			res
+				.status(422)
+				.json({ message: "Não há usuário cadastrado com este e-mail" });
+			return;
+		}
+
+		// check if password match with db password
+		const checkPassword = await bcrypt.compare(password, user.password)
+
+		if(!checkPassword){
+			res
+				.status(422)
+				.json({ message: "Senha inválida" });
+			return;
+		}
+
+		await creaetUserToken(user, req, res);
 	}
 };
