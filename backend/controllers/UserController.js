@@ -1,5 +1,9 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+// Helpers
+const getToken = require("../helper/get-token");
 const creaetUserToken = require("../helper/create-user-token");
 
 module.exports = class UserController {
@@ -81,7 +85,7 @@ module.exports = class UserController {
 		// check if user exists
 		const user = await User.findOne({ email: email });
 
-		console.log(user)
+		console.log(user);
 
 		if (!user) {
 			res
@@ -91,15 +95,55 @@ module.exports = class UserController {
 		}
 
 		// check if password match with db password
-		const checkPassword = await bcrypt.compare(password, user.password)
+		const checkPassword = await bcrypt.compare(password, user.password);
 
-		if(!checkPassword){
-			res
-				.status(422)
-				.json({ message: "Senha inválida" });
+		if (!checkPassword) {
+			res.status(422).json({ message: "Senha inválida" });
 			return;
 		}
 
 		await creaetUserToken(user, req, res);
+	}
+
+	static async checkUser(req, res) {
+		let currentUser;
+
+		console.log(req.headers.authorization);
+
+		if (req.headers.authorization) {
+			const token = getToken(req);
+			const decoded = jwt.verify(token, "nossosecret");
+
+			currentUser = await User.findById(decoded.id);
+
+			currentUser.password = undefined;
+		} else {
+			currentUser = null;
+		}
+
+		res.status(200).send(currentUser);
+		return;
+	}
+
+	static async getUserById(req, res) {
+		const id = req.params.id;
+
+		const user = await User.findById(id).select("-password");
+
+		if (!user) {
+			res
+				.status(422)
+				.json({ message: "Não há usuário cadastrado com este e-mail" });
+			return;
+		}
+
+		res.status(200).json(user);
+	}
+
+	static async editUser(req, res) {
+		res.status(200).json({
+			message: "Deu certo update",
+		});
+		return;
 	}
 };
