@@ -3,7 +3,6 @@ const getToken = require("./get-token");
 
 // middleware to validade token
 const checkToken = (req, res, next) => {
-	console.log(req.headers.authorization);
 
 	if (!req.headers.authorization) {
 		return res.status(401).json({

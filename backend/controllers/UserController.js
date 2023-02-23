@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 // Helpers
 const getToken = require("../helper/get-token");
 const creaetUserToken = require("../helper/create-user-token");
+const getUserByToken = require("../helper/get-user-by-token");
 
 module.exports = class UserController {
 	static async register(req, res) {
@@ -131,9 +132,7 @@ module.exports = class UserController {
 		const user = await User.findById(id).select("-password");
 
 		if (!user) {
-			res
-				.status(422)
-				.json({ message: "Não há usuário cadastrado com este e-mail" });
+			res.status(422).json({ message: "Usuário não encontrado!" });
 			return;
 		}
 
@@ -141,9 +140,78 @@ module.exports = class UserController {
 	}
 
 	static async editUser(req, res) {
-		res.status(200).json({
-			message: "Deu certo update",
-		});
+		const token = getToken(req);
+
+		const user = await getUserByToken(token);
+
+		const { name, email, phone, password, confirmpassword } = req.body;
+
+		let image = "";
+
+		// validations
+
+		if (!name) {
+			res.status(422).json({ message: "O nome é obrigatório" });
+			return;
+		}
+
+		user.name = name;
+
+		if (!email) {
+			res.status(422).json({ message: "O email é obrigatório" });
+			return;
+		}
+
+		// check if email has already taken
+		const userExists = await User.findOne({ email: email });
+
+		if (user.email !== email && userExists) {
+			res.status(422).json({ message: "Por favor, utilize outro e-mail!" });
+			return;
+		}
+
+		// final
+
+		user.email = email;
+
+		if (!phone) {
+			res.status(422).json({ message: "O phone é obrigatório" });
+			return;
+		}
+
+		user.phone = phone;
+
+		if (password !== confirmpassword) {
+			res
+				.status(422)
+				.json({ message: "A senha e confimação de senha precisam ser iguais" });
+		} else if (password === confirmpassword && password !== null) {
+			// creating password
+			const salt = await bcrypt.genSalt(12);
+			const passwordHast = await bcrypt.hash(password, salt);
+
+			user.password = passwordHast;
+		}
+
+		if (!user) {
+			res.status(422).json({ message: "Usuãrio não encontrado!" });
+			return;
+		}
+
+		try {
+			const updatedUser = await User.findOneAndUpdate(
+				{ _Id: user._id },
+				{ $set: user },
+				{ new: true }
+			);
+			res.status(202).json({
+				message: "Usuário atualizado com sucesso!",
+				data: updatedUser,
+			});
+		} catch (error) {
+			res.status(500).json({ message: err });
+			return;
+		}
 		return;
 	}
 };
