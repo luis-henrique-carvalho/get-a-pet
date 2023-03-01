@@ -146,10 +146,8 @@ module.exports = class UserController {
 
 		const { name, email, phone, password, confirmpassword } = req.body;
 
-		let image = "";
-
 		if (req.file) {
-			image = req.file.filename
+			user.image = req.file.filename;
 		}
 
 		// validations
@@ -174,48 +172,47 @@ module.exports = class UserController {
 			return;
 		}
 
-		// final
-
+		
 		user.email = email;
-
+		
 		if (!phone) {
 			res.status(422).json({ message: "O phone é obrigatório" });
 			return;
 		}
-
+		
 		user.phone = phone;
-
-		if (password !== confirmpassword) {
-			res
-				.status(422)
-				.json({ message: "A senha e confimação de senha precisam ser iguais" });
-		} else if (password === confirmpassword && password !== null) {
+		
+		// final
+		if (password != confirmpassword) {
+			res.status(422).json({ error: "As senhas não conferem." });
+		} else if (password === confirmpassword && password != null) {
 			// creating password
 			const salt = await bcrypt.genSalt(12);
-			const passwordHast = await bcrypt.hash(password, salt);
-
+			const reqPassword = req.body.password;
+			const passwordHast = await bcrypt.hash(reqPassword, salt);
+			
 			user.password = passwordHast;
 		}
-
+		
 		if (!user) {
-			res.status(422).json({ message: "Usuãrio não encontrado!" });
+			res.status(422).json({ message: "Usuário não encontrado!" });
 			return;
 		}
-
+		
+		
 		try {
-			const updatedUser = await User.findOneAndUpdate(
-				{ _Id: user._id },
-				{ $set: user },
-				{ new: true }
-			);
-			res.status(202).json({
-				message: "Usuário atualizado com sucesso!",
-				data: updatedUser,
-			});
-		} catch (error) {
-			res.status(500).json({ message: error });
-			return;
-		}
-		return;
+      // returns updated data
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: user._id },
+        { $set: user },
+        { new: true }
+      );
+      res.json({
+        message: "Usuário atualizado com sucesso!",
+        data: updatedUser,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
 	}
 };
