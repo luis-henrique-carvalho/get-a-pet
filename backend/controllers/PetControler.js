@@ -8,30 +8,36 @@ module.exports = class UserController {
 	static async create(req, res) {
 		const { name, age, weight, color } = req.body;
 
-		const available = true
+		const available = true;
 
 		// images upload
+		const images = req.files;
 
 		// validations
 		if (!name) {
-      res.status(422).json({ message: 'O nome é obrigatório!' })
-      return
-    }
+			res.status(422).json({ message: "O nome é obrigatório!" });
+			return;
+		}
 
-    if (!age) {
-      res.status(422).json({ message: 'A idade é obrigatória!' })
-      return
-    }
+		if (!age) {
+			res.status(422).json({ message: "A idade é obrigatória!" });
+			return;
+		}
 
-    if (!weight) {
-      res.status(422).json({ message: 'O peso é obrigatório!' })
-      return
-    }
+		if (!weight) {
+			res.status(422).json({ message: "O peso é obrigatório!" });
+			return;
+		}
 
-    if (!color) {
-      res.status(422).json({ message: 'A cor é obrigatória!' })
-      return
-    }
+		if (!color) {
+			res.status(422).json({ message: "A cor é obrigatória!" });
+			return;
+		}
+
+		if (!images) {
+			res.status(422).json({ message: "A imagem é obrigatória!" });
+			return;
+		}
 
 		const token = getToken(req);
 		const user = await getUserByToken(token);
@@ -52,6 +58,10 @@ module.exports = class UserController {
 			},
 		});
 
+		images.map((image) => {
+			pet.images.push(image.filename);
+		});
+
 		try {
 			const newPet = await pet.save();
 			res.status(201).json({
@@ -61,5 +71,12 @@ module.exports = class UserController {
 		} catch (error) {
 			res.status(500).json({ message: error });
 		}
+	}
+
+	static async getAll(req, res) {
+		const pets = await Pet.find().sort("-createdAt");
+		res.status(201).json({
+			pets: pets,
+		});
 	}
 };

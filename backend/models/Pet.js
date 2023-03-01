@@ -23,7 +23,7 @@ const Pet = mongoose.model(
 			},
 			images: {
 				type: Array,
-				required: false,
+				required: true,
 			},
 			availible: {
 				type: Boolean,
