@@ -148,6 +148,10 @@ module.exports = class UserController {
 
 		let image = "";
 
+		if (req.file) {
+			image = req.file.filename
+		}
+
 		// validations
 
 		if (!name) {
@@ -209,7 +213,7 @@ module.exports = class UserController {
 				data: updatedUser,
 			});
 		} catch (error) {
-			res.status(500).json({ message: err });
+			res.status(500).json({ message: error });
 			return;
 		}
 		return;
