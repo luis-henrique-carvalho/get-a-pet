@@ -172,47 +172,47 @@ module.exports = class UserController {
 			return;
 		}
 
-		
 		user.email = email;
-		
+
 		if (!phone) {
 			res.status(422).json({ message: "O phone é obrigatório" });
 			return;
 		}
-		
+
 		user.phone = phone;
-		
+
 		// final
 		if (password != confirmpassword) {
 			res.status(422).json({ error: "As senhas não conferem." });
+			return;
 		} else if (password === confirmpassword && password != null) {
 			// creating password
 			const salt = await bcrypt.genSalt(12);
 			const reqPassword = req.body.password;
 			const passwordHast = await bcrypt.hash(reqPassword, salt);
-			
+
 			user.password = passwordHast;
 		}
-		
+
 		if (!user) {
 			res.status(422).json({ message: "Usuário não encontrado!" });
 			return;
 		}
-		
-		
+
 		try {
-      // returns updated data
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: user._id },
-        { $set: user },
-        { new: true }
-      );
-      res.json({
-        message: "Usuário atualizado com sucesso!",
-        data: updatedUser,
-      });
-    } catch (error) {
-      res.status(500).json({ message: error });
-    }
+			// returns updated data
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: user._id },
+				{ $set: user },
+				{ new: true }
+			);
+			res.json({
+				message: "Usuário atualizado com sucesso!",
+				data: updatedUser,
+			});
+		} catch (error) {
+			res.status(500).json({ message: error });
+			return
+		}
 	}
 };
