@@ -17,7 +17,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    register(user)
+    register(user);
     // enviando o usuário
   };
 

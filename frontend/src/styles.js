@@ -118,3 +118,27 @@ export const InputStyled = styled.div`
     color: #7b7b7b;
   }
 `;
+
+export const MessageStyled = styled.div`
+  width: 60%;
+  margin: 1.2em auto 0;
+
+  div {
+    padding: 1em;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  .success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+
+  .error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+`;
