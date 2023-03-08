@@ -1,6 +1,6 @@
 import React from "react";
-
-
+import {InputStyled} from '../../styles'
+ 
 const Input = ({
   type,
   text,
@@ -11,7 +11,7 @@ const Input = ({
   multiple,
 }) => {
   return (
-    <div>
+    <InputStyled>
       <label htmlFor={name}>{text}:</label>
       <input
         type={type}
@@ -22,7 +22,7 @@ const Input = ({
         value={value}
         {...(multiple ? (multiple) : '')}
       />
-    </div>
+    </InputStyled>
   );
 };
 
