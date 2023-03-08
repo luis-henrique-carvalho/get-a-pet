@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+
 import { RegisterStyled } from "../../../styles";
+
 import Input from "../../form/Input";
+
+import { Context } from "../../../context/UserContext";
 
 const Register = () => {
   const [user, setUser] = useState({});
+  const { register } = useContext(Context);
+
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user)
+    register(user)
     // enviando o usuário
   };
 
