@@ -60,3 +60,7 @@ export const FooterStyled = styled.footer`
   background-color: #eee;
   border-top: 1px solid #666;
 `
+
+export const RegisterStyled = styled.section`
+  
+`
