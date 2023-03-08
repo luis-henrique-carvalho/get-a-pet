@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+
+export const ContainerStyle = styled.main`
+ min-height: 60vh;
+ padding: 1em 2em 3em;
+ max-width: 1200px;
+ margin: 0 auto;
+`
+
 export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
