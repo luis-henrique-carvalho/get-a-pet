@@ -1,12 +1,13 @@
 import React from "react";
+import { FooterStyled } from "../../styles";
 
 const Footer = () => {
   return (
-    <footer>
+    <FooterStyled>
       <p>
         <span className="bold">Get a Pet</span> &copy; 2023
       </p>
-    </footer>
+    </FooterStyled>
   );
 };
 
