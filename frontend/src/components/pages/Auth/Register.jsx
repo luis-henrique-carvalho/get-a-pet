@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { RegisterStyled } from "../../../styles";
+import { FormStyled } from "../../../styles";
 
 import Input from "../../form/Input";
 
@@ -22,7 +22,7 @@ const Register = () => {
   };
 
   return (
-    <RegisterStyled>
+    <FormStyled>
       <h1>Registrar</h1>
       <form onSubmit={handleSubmit}>
         <Input
@@ -70,7 +70,7 @@ const Register = () => {
       <p>
         Já tem conta <Link to={"login"}>Clique aqui</Link>
       </p>
-    </RegisterStyled>
+    </FormStyled>
   );
 };
 

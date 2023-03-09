@@ -60,7 +60,7 @@ export const FooterStyled = styled.footer`
   border-top: 1px solid #666;
 `;
 
-export const RegisterStyled = styled.section`
+export const FormStyled = styled.section`
   max-width: 300px;
   margin: 0 auto;
   background-color: #fff;
@@ -142,3 +142,5 @@ export const MessageStyled = styled.div`
     border-color: #f5c6cb;
   }
 `;
+
+
