@@ -143,4 +143,8 @@ export const MessageStyled = styled.div`
   }
 `;
 
+export const ProfileStyled = styled.section`
+  
+`;
+
 

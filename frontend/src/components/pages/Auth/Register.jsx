@@ -68,7 +68,7 @@ const Register = () => {
         <input type="submit" value={"Cadastrar"} />
       </form>
       <p>
-        Já tem conta <Link to={"login"}>Clique aqui</Link>
+        Já tem conta <Link to={"/login"}>Clique aqui</Link>
       </p>
     </FormStyled>
   );
