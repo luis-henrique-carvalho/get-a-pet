@@ -183,16 +183,17 @@ module.exports = class UserController {
 
 		// final
 		if (password != confirmpassword) {
-			res.status(422).json({ error: "As senhas não conferem." });
+			res.status(422).json({ message: "As senhas não conferem." });
 			return;
-		} else if (password === confirmpassword && password != null) {
-			// creating password
-			const salt = await bcrypt.genSalt(12);
-			const reqPassword = req.body.password;
-			const passwordHast = await bcrypt.hash(reqPassword, salt);
+		} else if (password == confirmpassword && password != null) {
+      // creating password
+      const salt = await bcrypt.genSalt(12);
+      const reqPassword = req.body.password;
 
-			user.password = passwordHast;
-		}
+      const passwordHash = await bcrypt.hash(reqPassword, salt);
+
+      user.password = passwordHash;
+    }
 
 		if (!user) {
 			res.status(422).json({ message: "Usuário não encontrado!" });
