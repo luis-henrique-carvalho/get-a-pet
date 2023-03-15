@@ -143,8 +143,13 @@ export const MessageStyled = styled.div`
   }
 `;
 
-export const ProfileStyled = styled.section`
-  
+export const RoundImageStyled = styled.img`
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+
+  .rounded_image.px75 {
+    width: 75px;
+    height: 75px;
+  }
 `;
-
-

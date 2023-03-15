@@ -4,6 +4,8 @@ import { FormStyled } from "../../../styles";
 import api from "../../../utils/api";
 import Input from "../../form/Input";
 
+import RoundedImage from "../../layout/RoundedImage";
+
 import useFlashMessage from '../../../hooks/useFlashMessage'
 
 const Profile = () => {
@@ -72,7 +74,7 @@ const Profile = () => {
     <FormStyled>
       <h1>Perfil</h1>
       {(user.image || preview) && (
-          <img
+          <RoundedImage
             src={
               preview
                 ? URL.createObjectURL(preview)
