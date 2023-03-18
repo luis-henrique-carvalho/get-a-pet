@@ -122,7 +122,7 @@ const Profile = () => {
           name="password"
           placeholder="Digite a sua senha"
           handleOnChange={handleChange}
-          value={user.password || ""}
+          value={""}
         />
 
         <Input
@@ -131,7 +131,7 @@ const Profile = () => {
           name="confirmpassword"
           placeholder="Confirme sua senha"
           handleOnChange={handleChange}
-          value={user.confirmpassword || ""}
+          value={""}
         />
         <input type="submit" value="Editar" />
       </form>
