@@ -24,6 +24,9 @@ const NavBar = () => {
             <li>
               <Link to="/user/profile">Perfil</Link>
             </li>
+            <li>
+              <Link to="/pet/mypets">My Pets</Link>
+            </li>
             <li onClick={logout}>Sair</li>
           </>
         ) : (

@@ -153,3 +153,8 @@ export const RoundImageStyled = styled.img`
     height: 75px;
   }
 `;
+
+export const MyPetsStyled = styled.section`
+ 
+`;
+
