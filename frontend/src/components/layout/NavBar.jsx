@@ -27,6 +27,9 @@ const NavBar = () => {
             <li>
               <Link to="/pet/mypets">My Pets</Link>
             </li>
+            <li>
+              <Link to="/pet/add">Add Pets</Link>
+            </li>
             <li onClick={logout}>Sair</li>
           </>
         ) : (

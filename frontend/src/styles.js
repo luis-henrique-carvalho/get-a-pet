@@ -154,7 +154,13 @@ export const RoundImageStyled = styled.img`
   }
 `;
 
-export const MyPetsStyled = styled.section`
- 
-`;
+export const MyPetsStyled = styled.section``;
 
+export const AddPetsStyled = styled.section`
+  text-align: center;
+  margin-bottom: 1.2em;
+
+  h1 {
+    margin-bottom: 0.2em;
+  }
+`;
