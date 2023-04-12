@@ -7,6 +7,8 @@ import api from "../../../utils/api";
 
 import { AddPetsStyled } from "../../../styles";
 
+import PetForm from "../../form/PetForm";
+
 
 const AddPets = () => {
   return (
@@ -15,6 +17,7 @@ const AddPets = () => {
         <h1>Cadastre seu PET</h1>
         <p>Depois ele ficará disponivel para adoção</p>
       </div>
+      <PetForm/>
     </AddPetsStyled>
   );
 };
