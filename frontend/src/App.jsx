@@ -31,6 +31,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/pet/mypets" element={<MyPets />} />
             <Route path="/pet/add" element={<AddPets />} />
+            <Route path="/pet/add" element={<AddPets />} />
           </Routes>
         </Container>
         <Footer />
